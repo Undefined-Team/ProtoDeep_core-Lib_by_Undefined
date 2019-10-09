@@ -22,7 +22,7 @@ typedef struct      uds_layer {
     void            *param;
     ud_layer_grade  layer_grade;
     ud_arr          *layer_name;
-    ud_layer_state  layer_state;
+    // ud_layer_state  layer_state;
 }                   ud_layer;
 
 typedef struct      uds_network {
