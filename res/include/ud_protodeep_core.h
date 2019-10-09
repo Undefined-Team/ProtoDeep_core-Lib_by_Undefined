@@ -4,7 +4,7 @@
 // Lib
 #include <stdio.h>
 #include <stdlib.h>
-#include <tensor.h>
+#include <ud_tensor.h>
 
 // Macro
 
