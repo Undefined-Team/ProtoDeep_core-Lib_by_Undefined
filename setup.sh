@@ -288,9 +288,6 @@ function start_recursive {
                 success_print "Dependency is installing..." "\t"
             fi
             ret=$(start_recursive "dep_recursive" "$actual_folder")
-            # elif ! $nodepmake ; then
-            #     ret=$(start_recursive "dep_recursive" "$actual_folder")
-            # fi
             is_error $? && { error_print "Can't scan dependency [ $name ] <-> [ $link ]" "\t"; }
             dep_tree="$dep_tree$ret\n"
         fi
