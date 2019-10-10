@@ -303,7 +303,7 @@ function start_recursive {
     ! $dep_recursive && { success_print "All done" "\t"; }
 
     # 8 - Install
-    if [ ! $dep_recursive ] || [ ! $nodepmake ] ; then
+    if ! $dep_recursive -o ! $nodepmake ; then
         ! $dep_recursive && { info_print "\n (8) Start compiling"; }
         # Copy headers in main lib folder
         if [ ! -f "$ud_lib_path"/include/ud_"$target_name".h ] || [[ $(diff "$location"/res/include/ud_"$target_name".h "$ud_lib_path"/include/ud_"$target_name".h) != "" ]] ; then
