@@ -286,10 +286,11 @@ function start_recursive {
                 success_print "Dependency was chmoded" "\t"
                 # Install dependency
                 success_print "Dependency is installing..." "\t"
-                ret=$(start_recursive "dep_recursive" "$actual_folder")
-            elif ! $nodepmake ; then
-                ret=$(start_recursive "dep_recursive" "$actual_folder")
             fi
+            ret=$(start_recursive "dep_recursive" "$actual_folder")
+            # elif ! $nodepmake ; then
+            #     ret=$(start_recursive "dep_recursive" "$actual_folder")
+            # fi
             is_error $? && { error_print "Can't scan dependency [ $name ] <-> [ $link ]" "\t"; }
             dep_tree="$dep_tree$ret\n"
         fi
@@ -302,30 +303,32 @@ function start_recursive {
     ! $dep_recursive && { success_print "All done" "\t"; }
 
     # 8 - Install
-    ! $dep_recursive && { info_print "\n (8) Start compiling"; }
-    # Copy headers in main lib folder
-    if [ ! -f "$ud_lib_path"/include/ud_"$target_name".h ] || [[ $(diff "$location"/res/include/ud_"$target_name".h "$ud_lib_path"/include/ud_"$target_name".h) != "" ]] ; then
-        cp "$location"/res/include/* "$ud_lib_path"/include/
-        is_error $? && { error_print "Copy headers files to [ $ud_lib_path/include/ ] failed"; }
-    fi
-    # Compil
-    if ! $dep_recursive ; then
-        make -C "$location" --no-print- LIBNAME="$target_name" DEPNAME="$make_dep_name" ARNAME="$make_ar_name" DEPHEADER="$dep_header" >&2
-    else
-        make -C "$location" --no-print- LIBNAME="$target_name" DEPNAME="$make_dep_name" ARNAME="$make_ar_name" DEPHEADER="$dep_header" > /dev/null 2>&1
-    fi
-    is_error $? && { error_print "Compilation failed"; }
-    # Copy lib in main lib folder
-    cp "$location"/*.a "$ud_lib_path"/lib/
-    is_error $? && { error_print "Copy compiled files to [ $ud_lib_path/lib/ ] failed"; }
-    if ! $dep_recursive ; then
-        success_print "All done\n" "\t"
-        success_print "Install completed."
-        if $has_set_env ; then
-            success_print "Shell restarting...\n"
-            exec $SHELL
+    if [ ! $dep_recursive ] || [ ! $nodepmake ] ; then
+        ! $dep_recursive && { info_print "\n (8) Start compiling"; }
+        # Copy headers in main lib folder
+        if [ ! -f "$ud_lib_path"/include/ud_"$target_name".h ] || [[ $(diff "$location"/res/include/ud_"$target_name".h "$ud_lib_path"/include/ud_"$target_name".h) != "" ]] ; then
+            cp "$location"/res/include/* "$ud_lib_path"/include/
+            is_error $? && { error_print "Copy headers files to [ $ud_lib_path/include/ ] failed"; }
         fi
-        printf "\n"
+        # Compil
+        if ! $dep_recursive ; then
+            make -C "$location" --no-print- LIBNAME="$target_name" DEPNAME="$make_dep_name" ARNAME="$make_ar_name" DEPHEADER="$dep_header" >&2
+        else
+            make -C "$location" --no-print- LIBNAME="$target_name" DEPNAME="$make_dep_name" ARNAME="$make_ar_name" DEPHEADER="$dep_header" > /dev/null 2>&1
+        fi
+        is_error $? && { error_print "Compilation failed"; }
+        # Copy lib in main lib folder
+        cp "$location"/*.a "$ud_lib_path"/lib/
+        is_error $? && { error_print "Copy compiled files to [ $ud_lib_path/lib/ ] failed"; }
+        if ! $dep_recursive ; then
+            success_print "All done\n" "\t"
+            success_print "Install completed."
+            if $has_set_env ; then
+                success_print "Shell restarting...\n"
+                exec $SHELL
+            fi
+            printf "\n"
+        fi
     fi
     $dep_recursive && { echo "$target_name $dep_lst"; }
 }
