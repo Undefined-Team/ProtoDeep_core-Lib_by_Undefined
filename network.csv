@@ -1,0 +1,11 @@
+input, input, dense, activation: relu; nb_neurons: 16, NULL, NULL
+dense1, hidden, dense, activation: relu; nb_neurons: 16, input, NULL
+dense2, hidden, dense, activation: relu; nb_neurons: 16, dense1, NULL
+dense3, hidden, dense, activation: relu; nb_neurons: 16, dense1; dense2, NULL
+layer0, hidden, dense, activation: undefined; nb_neurons: 0, dense1; dense2; dense3, NULL
+layer1, hidden, dense, activation: undefined; nb_neurons: 0, layer0, NULL
+layer2, hidden, dense, activation: undefined; nb_neurons: 0, layer1, NULL
+layer3, hidden, dense, activation: undefined; nb_neurons: 0, layer2, NULL
+conv1, hidden, conv, activation: tanh; kernel_size: {3}; strides: 2, dense1; dense3, NULL
+conv2, hidden, conv, activation: tanh; kernel_size: {2*3*4}; strides: 2, conv1, NULL
+output, output, dense, activation: relu; nb_neurons: 16, conv2, NULL
