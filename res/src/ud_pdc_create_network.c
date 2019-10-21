@@ -214,8 +214,8 @@ void		ud_pdc_link_layers(ud_layer *layers, ud_arr **layers_info, ud_arr *dico_la
 		layers++;
 		layers_info++;
 	}
-	if (layers && dico_layer)
-		;
+	(void)layers;
+	(void)dico_layer;
 }
 
 size_t		ud_pdc_count_front_layers(ud_pdc_tmp_layer *front_layers_lst)
