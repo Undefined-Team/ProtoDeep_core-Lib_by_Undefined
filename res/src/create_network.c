@@ -260,8 +260,7 @@ static void				ud_pdc_free_layer_content(ud_layer *layer)
 	//ud_arr_free(layer->layer_name); TITOU A TOI DE JOUER !!!
 	if (layer->actv_and_grad) ud_tens_free(layer->actv_and_grad);
 	if (layer->before_weight) ud_tens_free(layer->actv_and_grad);
-	if (layer->param)
-		;
+	(void)layer->param;
 	//ud_pdc_free_layer_param(layer.param);
 	free(layer->tst);
 }
