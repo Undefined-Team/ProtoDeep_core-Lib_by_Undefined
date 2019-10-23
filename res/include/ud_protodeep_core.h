@@ -6,8 +6,9 @@
 #include <stdlib.h>
 #include <ud_tensor.h>
 #include <ud_csv.h>
-
+#include <string.h>
 // Macro
+
 # define UD_LT_FULLCO   UD_LT_DENSE
 
 // Structures
@@ -24,6 +25,7 @@ typedef struct					uds_layer {
     void						*param;
     ud_layer_grade				layer_grade;
     ud_arr						*layer_name;
+	char						*tst;
     // ud_layer_state  layer_state;
 }								ud_layer;
 
@@ -45,12 +47,15 @@ typedef struct					uds_pdc_tmp_layer {
 typedef struct				    uds_network {
     ud_arr						*inputs_layer;
     ud_arr						*outputs_layer;
-    ud_layer					*layers;		// !! c'est une liste de layer (ex: layer[0].param, layer[1].param etc...)
+    ud_layer					*layers; //attention layer[0]... layer[1]
     size_t						layers_nbr;
 }								ud_network;
 
 // Prototypes
 
 ud_network		*ud_pdc_create_network(char *csv_path);
+void			ud_pdc_free_network(ud_network *network);
+void			ud_pdc_print_network(ud_network *network);
+void			ud_pdc_print_layer(ud_layer *layer);
 
 #endif
