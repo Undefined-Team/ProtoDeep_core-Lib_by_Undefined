@@ -13,7 +13,7 @@
 
 // Structures
 typedef enum            {UD_A_RELU, UD_A_LRELU, UD_A_SOFTMAX, UD_A_SIGMOID, UD_A_TANH} ud_activation;
-typedef enum            {UD_LT_DENSE, UD_LT_CONV, UD_LT_MAXPOOL, UD_LT_LSTM} ud_layer_type;
+typedef enum            {UD_LT_DENSE, UD_LT_CONV, UD_LT_MAXPOOL, UD_LT_RNN, UD_LT_LSTM, UD_LT_DROPOUT} ud_layer_type;
 typedef enum            {UD_LG_INPUT, UD_LG_HIDDEN, UD_LG_OUTPUT} ud_layer_grade;
 
 typedef struct					uds_layer {
@@ -50,6 +50,38 @@ typedef struct				    uds_network {
     ud_layer					*layers; //attention layer[0]... layer[1]
     size_t						layers_nbr;
 }								ud_network;
+
+typedef struct              uds_dense_params {
+    char                    *activation;
+    size_t                  *neurons_shape;
+}                           ud_dense_params;
+
+typedef struct              uds_conv_params {
+    char                    *activation;
+    size_t                  *kernel_size;
+    size_t                  strides;
+}                           ud_conv_params;
+
+typedef struct              uds_maxpool_params {
+    size_t                  *pool_size;
+    size_t                  strides;
+}                           ud_maxpool_params;
+
+typedef struct              uds_rnn_params {
+    char                    *activation;
+}                           ud_rnn_params;
+
+typedef struct              uds_lstm_params {
+    char                    *activation;
+    char                    *recurrent_activation;
+    char                    *padding;
+}                           ud_lstm_params;
+
+typedef struct              uds_dropout_params {
+    char                    *activation;
+    size_t                  *neurons_shape;
+    size_t                  dropout_rate;
+}                           ud_dropout_params;
 
 // Prototypes
 
