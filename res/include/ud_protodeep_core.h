@@ -80,7 +80,7 @@ typedef struct              uds_lstm_params {
 typedef struct              uds_dropout_params {
     char                    *activation;
     size_t                  *neurons_shape;
-    size_t                  dropout_rate;
+    double                  dropout_rate;
 }                           ud_dropout_params;
 
 // Prototypes
