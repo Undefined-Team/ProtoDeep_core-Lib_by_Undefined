@@ -123,7 +123,7 @@ static void				update_tmp_front_layer(void *v_tmp_front_layers, ud_layer *front)
 	ud_pdc_tmp_layer	**tmp_front_layers = (ud_pdc_tmp_layer **)v_tmp_front_layers;
 	ud_pdc_tmp_layer	*new_tmp_layer;
 	
-	UD_UT_PROT_MALLOC_VOID(new_tmp_layer = ud_ut_malloc(sizeof(ud_pdc_tmp_layer)));
+	ud_ut_prot_malloc_void(new_tmp_layer = ud_ut_malloc(sizeof(ud_pdc_tmp_layer)));
 	new_tmp_layer->layer = front;
 	new_tmp_layer->next = NULL;
 	if (!(*tmp_front_layers)) *tmp_front_layers = new_tmp_layer;
@@ -226,7 +226,7 @@ static ud_arr			**ud_pdc_parse_csv(char *csv_path, size_t *layers_nbr)
 	ud_arr	**t_csv_lines_val = (ud_arr **)csv_lines->val;
 
 	*layers_nbr = csv_lines->len - 1;
-	UD_UT_PROT_MALLOC(layers_info = ud_ut_malloc(sizeof(ud_arr *) * (*layers_nbr + 1)));
+	ud_ut_prot_malloc(layers_info = ud_ut_malloc(sizeof(ud_arr *) * (*layers_nbr + 1)));
 	ud_arr	**p_layers_info = layers_info;
 	for (ud_ut_count i = 0; i < *layers_nbr; ++i, ++p_layers_info, ++t_csv_lines_val)
 		*p_layers_info = ud_stra_split(*t_csv_lines_val, ", ");
@@ -287,9 +287,9 @@ ud_network				*ud_pdc_create_network(char *csv_path)
 	size_t		output_nbr = 0;
 	ud_arr		*dico_layer[64] = {NULL}; // [a-zA-Z0-9] et - _
 
-	UD_UT_PROT_MALLOC(network = ud_ut_malloc(sizeof(ud_network)));
+	ud_ut_prot_malloc(network = ud_ut_malloc(sizeof(ud_network)));
 	ud_arr		**layers_info = ud_pdc_parse_csv(csv_path, &layers_nbr);
-	UD_UT_PROT_MALLOC(network->layers = ud_ut_malloc(sizeof(ud_layer) * layers_nbr));
+	ud_ut_prot_malloc(network->layers = ud_ut_malloc(sizeof(ud_layer) * layers_nbr));
 	ud_layer	*p_layers = network->layers;
 	ud_arr		**p_layers_info = layers_info;
 	for (ud_ut_count i = 0; i < layers_nbr; ++i, ++p_layers, ++p_layers_info) *p_layers = ud_pdc_create_layer(*p_layers_info, &input_nbr, &output_nbr, dico_count);
