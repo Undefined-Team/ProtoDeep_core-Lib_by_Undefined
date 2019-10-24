@@ -221,7 +221,7 @@ static ud_layer			ud_pdc_create_layer(ud_arr *layer_info, size_t *input_nbr, siz
 static ud_arr			**ud_pdc_parse_csv(char *csv_path, size_t *layers_nbr)
 {
 	ud_arr	**layers_info;
-	ud_arr	*csv = ud_file_read(csv_path);
+	ud_arr	*csv = ud_filea_read(csv_path);
 	ud_arr	*csv_lines = ud_stra_split(csv, "\n");
 	ud_arr	**t_csv_lines_val = (ud_arr **)csv_lines->val;
 
