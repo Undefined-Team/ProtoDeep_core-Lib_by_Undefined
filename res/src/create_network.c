@@ -214,7 +214,7 @@ static ud_layer			ud_pdc_create_layer(ud_arr *layer_info, size_t *input_nbr, siz
 	if (layer.layer_grade != UD_LG_OUTPUT) layer.front_layer = ud_arr_set(ud_pdc_tmp_layer *, NULL); else layer.front_layer = NULL;
 	layer.layer_name = ud_stra_new((char *)t_layer_info_val[0]->val);
 	ud_pdc_update_dico_count(&layer, dico_count);
-	layer.tst = strdup((char *)layer.layer_name->val);
+	layer.tst = ud_str_dup((char *)layer.layer_name->val);
 	return (layer);
 }
 

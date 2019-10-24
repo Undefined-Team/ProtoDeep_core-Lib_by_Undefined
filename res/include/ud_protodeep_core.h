@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ud_tensor.h>
-#include <ud_csv.h>
-#include <string.h>
+#include <ud_csv_array.h>
+
 // Macro
 
 # define UD_LT_FULLCO   UD_LT_DENSE
